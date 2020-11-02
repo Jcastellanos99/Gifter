@@ -1,6 +1,11 @@
 //Importar librerias y modulos necesarios.
 import React, { useState } from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, 
+        Text, 
+        Dimensions, 
+        Image
+        } from "react-native";
+
 import {Container,
         Item,
         Input,
@@ -12,6 +17,8 @@ import {Container,
         } from "native-base";
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
+
+const { width, height} = Dimensions.get("window");
 
 
 const {apiKey} = getEnvVars();
@@ -44,7 +51,8 @@ const HomeScreen = () => {
                         </Button>
                     </Right>
                 </Item>
-            </Header>  
+            </Header>        
+            <Image source={require("../../assets/Letras_gifter.png")} styles={styles.gifterImage}/>
             <Segment style={styles.segment}>
                 <Button rounded style={styles.button}>
                     <Text>Stickers</Text>
@@ -61,8 +69,18 @@ const HomeScreen = () => {
 
 //Variable para la hoja de estilos
 const styles = StyleSheet.create({
-    search:
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    gifterImage: 
     {
+        width: width,
+        height: height * 0.100,
+        resizeMode: "contain",
+    },
+    search: {
         backgroundColor:"white",
         marginTop:5,
         
@@ -77,7 +95,6 @@ const styles = StyleSheet.create({
         marginLeft: 55,
         marginRight: 55,
     },
-
 });
 
 export default HomeScreen;
