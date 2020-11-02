@@ -1,7 +1,14 @@
 //Importar librerias y modulos necesarios.
-import React, { Component } from "react";
-import {requireNativeComponent, StyleSheet, Text, Image, Dimensions} from "react-native";
-import {Input,Container, Item} from "native-base";
+import {StyleSheet, Text, Image, Dimensions,View} from "react-native";
+import React from "react";
+import {Container,
+    Item,
+    Input,
+    Header,
+    Icon,
+    Right,
+    Button
+} from "native-base";
 
 const { width, height} = Dimensions.get("window");
 
@@ -9,10 +16,17 @@ const { width, height} = Dimensions.get("window");
 const HomeScreen = () => {
     return (
         <Container>
-            <Image source={require("../../assets/Letras.png")} styles={styles.gifterImage}/>
+            <Header searchBar style={styles.search}>
+                <Item>
+                    <Input placeholder="Buscar"/>
+                    <Right>
+                        <Button transparent><Icon name="search"/></Button>
+                    </Right>
+                </Item>
+            </Header>        
+            <Image source={require("../../assets/Letras_gifter.png")} styles={styles.gifterImage}/>
             <Text>Pantalla Principal</Text>
         </Container>
-        
     );
 };
 
@@ -25,10 +39,17 @@ const styles = StyleSheet.create({
     },
     gifterImage: {
     width: width,
-    height: height * 0.30,
+    height: height * 0.100,
     resizeMode: "contain",
-    }  
-
+    },
+    search: {
+        backgroundColor:"white",
+        borderRadius: 160/2,
+        marginLeft:15,
+        marginRight:15,
+        marginTop:10,
+        height: 40,
+    },
 });
 
 export default HomeScreen;
