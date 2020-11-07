@@ -5,7 +5,7 @@ const { apiUrl } = getEnvVars();
 
 //Instacia de conexión
 const instance = axios.create({
-    baseURL: apiUrl
+    baseURL: apiUrl 
 });
 
 export default instance;

@@ -1,9 +1,11 @@
 //Importar librerias y modulos necesarios.
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {StyleSheet, 
         Text, 
         Dimensions, 
-        Image
+        Image,
+        FlatList,
+        View
         } from "react-native";
 
 import {Container,
@@ -13,15 +15,23 @@ import {Container,
         Icon,
         Right,
         Button,
-        Segment
+        Segment,
+        H3,
+        Card,
+        CardItem,
+        Spinner,
+        Body
         } from "native-base";
+
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
+
+const {apiKey} = getEnvVars();
+
 
 const { width, height} = Dimensions.get("window");
 
 
-const {apiKey} = getEnvVars();
 
 
 
@@ -29,19 +39,45 @@ const {apiKey} = getEnvVars();
 const HomeScreen = () => {
     //Maneja el estado de los stickers.
     const [stickers, setStickers] = useState(null);
+    const [error, setError] = useState(false);
+
+    
 
     const getStickers = async () => {
-        //Se consulta la api
-        const response = await backend.get(`stickers/trending?api_key=${apiKey}&limit=25&rating=g`);
+       try {
 
-        console.log(response.data);
+         //Se consulta la api
+         const response = await backend.get(`stickers/search?api_key=${apiKey}&q=new&limit=25&offset=0&rating=g&lang=es`);
+
+         setStickers(response.data);
+
+       } catch (error) {
+
+            setError(true);
+
+       }
     }
 
-    getStickers();
+    useEffect(() => {
+        getStickers();
+    }, [])
 
+   
+
+    if (!stickers)
+    {
+        return(
+            <View style={{flex: 1}}>
+                <Spinner/>
+            </View>
+        )
+    }
 
     return (
-        <Container>
+        <Container style={styles.container}>
+            <Header noShadow style={styles.header}>
+                <Image source={require("../../assets/1.png")} styles={styles.gifterImage}/>  
+            </Header>  
             <Header searchBar noShadow style={styles.search}>
                 <Item rounded>
                     <Input placeholder="Buscar"/>
@@ -51,18 +87,34 @@ const HomeScreen = () => {
                         </Button>
                     </Right>
                 </Item>
-            </Header>        
-            <Image source={require("../../assets/Letras_gifter.png")} styles={styles.gifterImage}/>
+            </Header> 
             <Segment style={styles.segment}>
                 <Button rounded style={styles.button}>
-                    <Text>Stickers</Text>
+                    <Text><H3>Stickers</H3></Text>
                 </Button>
                 <Button rounded style={styles.button}>
-                    <Text>
-                        Gifs
-                    </Text>
+                    <Text><H3>Gifs</H3></Text>
                 </Button>
-            </Segment>          
+            </Segment> 
+            <FlatList
+            data={stickers.data}
+            keyExtractor={(item) => item.id}
+            ListEmptyComponent={<Text>No se encontraron Stickers</Text>}
+            renderItem={({ item }) => {
+                return (
+                    <View>
+                    <Card>
+                    <CardItem>
+                        <Body>
+                        <Image source={(item.image)} alt={item.images}></Image>
+                        <Text>{item.title}</Text>
+                        </Body>
+                    </CardItem>
+                </Card>
+                </View>
+                )
+            }}
+            />
         </Container>
     );
 };
@@ -70,30 +122,36 @@ const HomeScreen = () => {
 //Variable para la hoja de estilos
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        backgroundColor: "#EDE9E6",
+    },
+    header: 
+    {
+        backgroundColor:"#EDE9E6",        
     },
     gifterImage: 
     {
         width: width,
-        height: height * 0.100,
+        height: height * 0.5,
         resizeMode: "contain",
     },
     search: {
-        backgroundColor:"white",
-        marginTop:5,
+        backgroundColor:"#EDE9E6",
+        marginTop:-15,
         
     },
     segment:
     {
-        backgroundColor: "white",
+        backgroundColor: "#EDE9E6",
     },
     button:
     {
-        borderBottomColor: "gray",
-        marginLeft: 55,
-        marginRight: 55,
+        flex: 1,
+        width: width * 0.5,
+        fontFamily: "FontAwesome",
+        fontSize: 20,
+        borderBottomColor: "black",
+        marginLeft: 15,
+        marginHorizontal: 15,
     },
 });
 
