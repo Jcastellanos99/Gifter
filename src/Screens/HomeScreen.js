@@ -15,19 +15,19 @@ import {Container,
         Button,
         Segment
         } from "native-base";
-import backend from "../api/backend";
-import getEnvVars from "../../enviroment";
+//import backend from "../api/backend";
+//import getEnvVars from "../../enviroment";
 
 const { width, height} = Dimensions.get("window");
 
 
-const {apiKey} = getEnvVars();
+//const {apiKey} = getEnvVars();
 
 
 
 //Variable que contiene la pantalla
 const HomeScreen = () => {
-    //Maneja el estado de los stickers.
+    /*//Maneja el estado de los stickers.
     const [stickers, setStickers] = useState(null);
 
     const getStickers = async () => {
@@ -37,7 +37,7 @@ const HomeScreen = () => {
         console.log(response.data);
     }
 
-    getStickers();
+    getStickers();*/
 
 
     return (
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     gifterImage: 
     {
         width: width,
-        height: height * 0.100,
+        height: height * 0.33,
         resizeMode: "contain",
     },
     search: {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     },
     button:
     {
-        borderBottomColor: "gray",
+        borderBottomColor: "black",
         marginLeft: 55,
         marginRight: 55,
     },
