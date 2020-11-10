@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, Dimensions, Image} from "react-native";
 import {Container, Content, H1, Spinner, Card, CardItem } from "native-base";
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
 const { width, height} = Dimensions.get("window");
 
@@ -52,11 +52,13 @@ const SearchResults = ({route, navigation}) => {
             renderItem={({ item }) => {
                 return (
                     <View >
+                    <TouchableOpacity onPress={() => navigation.navigate("Image", {id: item.id})}>
                     <Card style={{width:width*0.99, height:height*0.35, backgroundColor: "#EDE9E6"}}>
                     <CardItem cardBody style={styles.cardItem}>
                         <Image source={{uri: `${item.images.original.webp}${item.images.original.height}${item.images.original.width}`}} style={styles.imageStyle}/>
                     </CardItem>
                 </Card>
+                </TouchableOpacity>
                 </View>
                 )
             }}/>

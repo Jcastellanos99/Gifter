@@ -25,6 +25,7 @@ import {Container,
 
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const {apiKey} = getEnvVars();
 
@@ -36,7 +37,7 @@ const { width, height} = Dimensions.get("window");
 
 
 //Variable que contiene la pantalla
-const HomeScreen = () => {
+const HomeScreen = ( {navigation} ) => {
     //Maneja el estado de los stickers.
     const [stickers, setStickers] = useState(null);
     const [error, setError] = useState(false);
@@ -48,7 +49,7 @@ const HomeScreen = () => {
        try {
 
          //Se consulta la api
-         const response = await backend.get(`stickers/search?api_key=${apiKey}&q=local&limit=25&offset=0&rating=g&lang=es`);
+         const response = await backend.get(`stickers/search?api_key=${apiKey}&q=ryan&limit=25&offset=0&rating=g&lang=es`);
 
          setStickers(response.data);
 
@@ -77,14 +78,13 @@ const HomeScreen = () => {
     return (
         <Container style={styles.container}>
             <Header noShadow style={styles.header}>
-                <Image source={require("../../assets/2.png")} styles={styles.gifterImage}/>  
+                <Image source={require("../../assets/LogoPantallas.png")} styles={styles.gifterImage}/>  
             </Header>  
             <Header searchBar noShadow style={styles.search}>
                 <Item rounded>
                     <Input placeholder="Buscar" value={search} onChangeText={setSearch}/>
-                    {console.log(search)}
                     <Right>
-                        <Button transparent>
+                        <Button transparent onPress={() => {navigation.navigate("searchResults", {search})}}>
                             <Icon name="search"/>
                         </Button>
                     </Right>
@@ -98,11 +98,13 @@ const HomeScreen = () => {
             renderItem={({ item }) => {
                 return (
                     <View >
-                    <Card style={{width:width*0.99, height:height*0.28, backgroundColor: "#EDE9E6"}}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Image", {id: item.id})}>
+                    <Card style={{width:width*0.99, height:height*0.35, backgroundColor: "#EDE9E6"}}>
                     <CardItem cardBody style={styles.cardItem}>
-                        <Image source={{uri: `${item.images.original.url}${item.images.original.height}${item.images.original.width}`}} style={styles.imageStyle}/>
+                        <Image source={{uri: `${item.images.original.webp}${item.images.original.height}${item.images.original.width}`}} style={styles.imageStyle}/>
                     </CardItem>
                 </Card>
+                </TouchableOpacity>
                 </View>
                 )
             }}
@@ -147,8 +149,8 @@ const styles = StyleSheet.create({
     },
     imageStyle:
     {
-        width: width * 0.45,
-        height: height * 0.25,
+        width: width * 0.50,
+        height: height * 0.28,
     },
     cardItem:
     {
