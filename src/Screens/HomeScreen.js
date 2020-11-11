@@ -22,8 +22,6 @@ import {Container,
         Spinner,
         Body
         } from "native-base";
-//import backend from "../api/backend";
-//import getEnvVars from "../../enviroment";
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
 
@@ -43,7 +41,7 @@ const { width, height} = Dimensions.get("window");
 
 //Variable que contiene la pantalla
 const HomeScreen = () => {
-    /*//Maneja el estado de los stickers.
+    //Maneja el estado de los stickers.
     const [stickers, setStickers] = useState(null);
     const [error, setError] = useState(false);
 
@@ -63,7 +61,7 @@ const HomeScreen = () => {
 
        }
     }
-    getStickers();*/
+    getStickers();
 
     useEffect(() => {
         getStickers();
@@ -82,7 +80,7 @@ const HomeScreen = () => {
     return (
         <Container style={styles.container}>
             <Header noShadow style={styles.header}>
-                <Image source={require("../../assets/1.png")} styles={styles.gifterImage}/>  
+                <Image source={require("../../assets/probar.png")} styles={styles.gifterImage}/>  
             </Header>  
             <Header searchBar noShadow style={styles.search}>
                 <Item rounded>
