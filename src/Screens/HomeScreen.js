@@ -42,6 +42,7 @@ const HomeScreen = ( {navigation} ) => {
     const [stickers, setStickers] = useState(null);
     const [error, setError] = useState(false);
     const [search, setSearch] = useState("");
+    const [searchError, setSearchError] = useState(false);
 
     
 
@@ -60,36 +61,54 @@ const HomeScreen = ( {navigation} ) => {
        }
     }
 
+    const handlerSearch = () => {
+        if (!search) setSearchError(true);
+        else {
+          navigation.navigate("searchResults", { search });
+          setSearch("");
+          setSearchError(false);
+        }
+      };
+
     useEffect(() => {
         getStickers();
     }, [])
 
-   
+    useEffect(() => {
+        if (search) setSearchError(false);
+      }, [search]);   
 
     if (!stickers)
     {
         return(
-            <View style={{flex: 1}}>
+            <View style={styles.spinner}>
                 <Spinner/>
             </View>
         )
     }
     
     return (
-        <Container style={styles.container}>
-            <Header noShadow style={styles.header}>
-                <Image source={require("../../assets/LogoPantallas.png")} styles={styles.gifterImage}/>  
-            </Header>  
-            <Header searchBar noShadow style={styles.search}>
+        <Container style={styles.container}> 
+            <Header searchBar noShadow style={styles.search} androidStatusBarColor="#004e64">
                 <Item rounded>
-                    <Input placeholder="Buscar" value={search} onChangeText={setSearch}/>
+                    <Input placeholder="Buscar" value={search} onChangeText={setSearch} style={searchError ? styles.inputError : null}/>
                     <Right>
-                        <Button transparent onPress={() => {navigation.navigate("searchResults", {search})}}>
+                        <Button transparent onPress={handlerSearch}>
                             <Icon name="search"/>
                         </Button>
                     </Right>
                 </Item>
             </Header> 
+            <Segment style={styles.segment}>
+                <Button rounded  onPress={() => {navigation.navigate("homeScreen", {search})}} style={styles.button}>	        
+                    <Text>Stickers</Text>	                    
+                </Button>	                
+                <Button rounded onPress={() => {navigation.navigate("homeScreenGif", {search})}} style={styles.button}>	                
+                    <Text>	                    
+                        Gifs	
+                    </Text>	
+                </Button>	               
+            </Segment>          	            
             
             <FlatList
             data={stickers.data}
@@ -99,8 +118,8 @@ const HomeScreen = ( {navigation} ) => {
                 return (
                     <View >
                         <TouchableOpacity onPress={() => navigation.navigate("Image", {id: item.id})}>
-                    <Card style={{width:width*0.99, height:height*0.35, backgroundColor: "#EDE9E6"}}>
-                    <CardItem cardBody style={styles.cardItem}>
+                    <Card style={styles.card} >
+                    <CardItem bordered cardBody style={styles.cardItem}>
                         <Image source={{uri: `${item.images.original.webp}${item.images.original.height}${item.images.original.width}`}} style={styles.imageStyle}/>
                     </CardItem>
                 </Card>
@@ -116,11 +135,11 @@ const HomeScreen = ( {navigation} ) => {
 //Variable para la hoja de estilos
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#EDE9E6",
+        backgroundColor: "#FFF3EA",
     },
     header: 
     {
-        backgroundColor:"#EDE9E6",        
+        backgroundColor:"#FFF3EA",        
     },
     gifterImage: 
     {
@@ -129,21 +148,21 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     search: {
-        backgroundColor:"#EDE9E6",
-        marginTop:-15,
+        backgroundColor:"#FFF3EA",
+        //marginTop:-15,
         
     },
     segment:
     {
-        backgroundColor: "#EDE9E6",
+        backgroundColor: "#FFF3EA",
     },
     button:
     {
         flex: 1,
         width: width * 0.5,
         fontFamily: "FontAwesome",
-        fontSize: 20,
-        borderBottomColor: "black",
+        fontSize: 50,
+        borderBottomColor: "#251C69",
         marginLeft: 15,
         marginHorizontal: 15,
     },
@@ -154,13 +173,37 @@ const styles = StyleSheet.create({
     },
     cardItem:
     {
-        backgroundColor: "#EDE9E6",
-        marginLeft:15, 
-        marginRight:15, 
+        backgroundColor: "#E5E4E2",
+        marginLeft:width*0.0099, 
+        marginRight:width*0.0099, 
+        marginTop:height*0.007,
+        marginBottom:height*0.007,
         flex:1,  
         justifyContent: "center", 
-        alignItems: "center"
+        alignItems: "center",
+        borderRadius:20,
     },
+    card:
+    {
+        width:width*0.96, 
+        height:height*0.35, 
+        backgroundColor: "#251C69", 
+        borderRadius:20, 
+        marginLeft:width*0.02, 
+        marginRight:width*0.02
+    },
+    spinner:
+    {
+        justifyContent: "center",
+        alignContent: "center",
+        backgroundColor: "#251C69",
+        flex: 1,
+    },
+    inputError: {
+        borderColor: "#251C69",
+        borderWidth: 1,
+        color: "#251C69",
+      },
 });
 
 export default HomeScreen;

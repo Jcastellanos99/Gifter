@@ -35,7 +35,7 @@ const SearchResults = ({route, navigation}) => {
     if (!stickers)
     {
         return(
-            <View style={{flex: 1}}>
+            <View style={styles.spinner}>
                 <Spinner/>
             </View>
         )
@@ -44,7 +44,7 @@ const SearchResults = ({route, navigation}) => {
 
     return (
         <Container style={styles.container}>
-            <H1 style={styles.h1}>Resultados de la busqueda:  {search} </H1>
+            <H1>Resultados</H1>
             <FlatList
             data={stickers.data}
             keyExtractor={(item) => item.id}
@@ -53,7 +53,7 @@ const SearchResults = ({route, navigation}) => {
                 return (
                     <View >
                     <TouchableOpacity onPress={() => navigation.navigate("Image", {id: item.id})}>
-                    <Card style={{width:width*0.99, height:height*0.35, backgroundColor: "#EDE9E6"}}>
+                    <Card style={styles.card}>
                     <CardItem cardBody style={styles.cardItem}>
                         <Image source={{uri: `${item.images.original.webp}${item.images.original.height}${item.images.original.width}`}} style={styles.imageStyle}/>
                     </CardItem>
@@ -68,14 +68,14 @@ const SearchResults = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#EDE9E6",
+        backgroundColor: "#FFF3EA",
     },
     h1:
     { 
         
         color: "#000",
         position: "relative",
-        backgroundColor: "#EDE9E6",
+        backgroundColor: "#FFF3EA",
         marginTop: height*0.02,
         marginEnd: height*0.08,
     },
@@ -86,12 +86,31 @@ const styles = StyleSheet.create({
     },
     cardItem:
     {
-        backgroundColor: "#EDE9E6",
-        marginLeft:15, 
-        marginRight:15, 
+        backgroundColor: "#E5E4E2",
+        marginLeft:width*0.0099, 
+        marginRight:width*0.0099, 
+        marginTop:height*0.007,
+        marginBottom:height*0.007,
         flex:1,  
         justifyContent: "center", 
-        alignItems: "center"
+        alignItems: "center",
+        borderRadius:20,
+    },
+    card:
+    {
+        width:width*0.96, 
+        height:height*0.35, 
+        backgroundColor: "#251C69", 
+        borderRadius:20, 
+        marginLeft:width*0.02, 
+        marginRight:width*0.02
+    },
+    spinner:
+    {
+        justifyContent: "center",
+        alignContent: "center",
+        backgroundColor: "#FFF3EA",
+        flex: 1,
     },
 });
 

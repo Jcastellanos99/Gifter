@@ -28,14 +28,14 @@ const ShowImageScreen = ({route, navigation}) => {
         }
      };
 
-    useEffect(() => {
+     useEffect(() => {
         getStickerImage();
     }, [])
 
     if (!sticker)
     {
         return(
-            <View style={{flex: 1}}>
+            <View style={styles.spinner}>
                 <Spinner/>
             </View>
         )
@@ -43,20 +43,27 @@ const ShowImageScreen = ({route, navigation}) => {
 
     return (
         <Content style={styles.container}>
-            <Card style={{backgroundColor: "#EDE9E6"}}>
+            <Card style={styles.cardImage}>
                 <CardItem cardBody style={styles.cardItemImage}>
-                    <Image source={{uri: `${sticker.data.images.original.webp}${sticker.data.images.original.height}${sticker.data.images.original.width}`}} style={styles.imageStyle}/>
+                    <Image source={
+                    { uri: `${sticker.data.images.original.webp}${sticker.data.images.original.height}${sticker.data.images.original.width}`}
+                    } style={styles.imageStyle}/>
                 </CardItem>
+            </Card>
+            <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                <Text>Tipo: {sticker.data.type}</Text>
+                    <Text>Tipo: {sticker.data.type}</Text>
                 </CardItem>
+            </Card>
+            <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                <Text>Titulo: {sticker.data.title}</Text>
+                    <Text>Titulo: {sticker.data.title}</Text>
                 </CardItem>
+            </Card>
+            <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                <Text>Fecha Creación: {sticker.data.import_datetime}</Text>
-                </CardItem>
-                
+                    <Text>Fecha Creación: {sticker.data.import_datetime}</Text>
+                </CardItem>    
             </Card>
         </Content>
     );
@@ -64,28 +71,61 @@ const ShowImageScreen = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: height*0.03,
-        backgroundColor: "#EDE9E6",
+        marginTop: height*0.005,
+        backgroundColor: "#FFF3EA",
     },
     imageStyle:
     {
-        width: width * 0.90,
-        height: height * 0.60,
-        justifyContent: "center",
+        width: width * 0.99,
+        height: height * 0.5,
+        resizeMode: "contain",
     },
     cardItemImage:
     {
-        backgroundColor: "#EDE9E6",
-        marginLeft:15, 
-        marginRight:15, 
+        backgroundColor: "#E5E4E2",
+        marginLeft:width*0.0099, 
+        marginRight:width*0.0099, 
+        marginTop:height*0.007,
+        marginBottom:height*0.007,
         flex:1,  
         justifyContent: "center", 
-        alignItems: "center"
+        alignItems: "center",
+        borderRadius:20,
     },
     cardItem:
     {
-        backgroundColor: "#EDE9E6",
-        flex:1,
+        backgroundColor: "#E5E4E2",
+        marginLeft:width*0.0099, 
+        marginRight:width*0.0099, 
+        marginTop:height*0.007,
+        marginBottom:height*0.007,
+        flex:1,  
+        borderRadius:20,
+    },
+    cardImage:
+    {
+        width:width*0.96, 
+        height:height*0.535, 
+        backgroundColor: "#251C69", 
+        borderRadius:20, 
+        marginLeft:width*0.02, 
+        marginRight:width*0.02
+    },
+    card:
+    {
+        width:width*0.96, 
+        height:height*0.0999, 
+        backgroundColor: "#251C69", 
+        borderRadius:20, 
+        marginLeft:width*0.02, 
+        marginRight:width*0.02,
+    },
+    spinner:
+    {
+        justifyContent: "center",
+        alignContent: "center",
+        backgroundColor: "#50858b",
+        flex: 1,
     },
 });
 
