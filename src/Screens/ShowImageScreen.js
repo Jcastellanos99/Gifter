@@ -8,31 +8,35 @@ const {apiKey} = getEnvVars();
 
 const { width, height} = Dimensions.get("window");
 
+
+//Variable que contiene la pantalla
 const ShowImageScreen = ({route, navigation}) => {
 
     const {id} = route.params;
-    const [sticker, setSticker] = useState(null);
+    const [stickerGif, setStickerGif] = useState(null);
     const [error, setError] = useState(false);
     
 
     const getStickerImage = async () => { 
 
         try{
-
+            //Se consulta la api
         const response = await backend.get(`gifs/${id}?api_key=${apiKey}`);
 
-        setSticker(response.data);
+        setStickerGif(response.data);
         }catch (error) {
 
             setError(true);
         }
      };
 
+     //Manda a llamar la funcion para obtener el sticker o gif
      useEffect(() => {
         getStickerImage();
     }, [])
 
-    if (!sticker)
+    //Verifica que la variable no este vacia
+    if (!stickerGif)
     {
         return(
             <View style={styles.spinner}>
@@ -46,23 +50,23 @@ const ShowImageScreen = ({route, navigation}) => {
             <Card style={styles.cardImage}>
                 <CardItem cardBody style={styles.cardItemImage}>
                     <Image source={
-                    { uri: `${sticker.data.images.original.webp}${sticker.data.images.original.height}${sticker.data.images.original.width}`}
+                    { uri: `${stickerGif.data.images.original.webp}${stickerGif.data.images.original.height}${stickerGif.data.images.original.width}`}
                     } style={styles.imageStyle}/>
                 </CardItem>
             </Card>
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                    <Text>Tipo: {sticker.data.type}</Text>
+                    <Text style={styles.text}>Tipo: {stickerGif.data.type}</Text>
                 </CardItem>
             </Card>
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                    <Text>Titulo: {sticker.data.title}</Text>
+                    <Text style={styles.text}>Titulo: {stickerGif.data.title}</Text>
                 </CardItem>
             </Card>
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
-                    <Text>Fecha Creación: {sticker.data.import_datetime}</Text>
+                    <Text style={styles.text}>Fecha Creación: {stickerGif.data.import_datetime}</Text>
                 </CardItem>    
             </Card>
         </Content>
@@ -72,17 +76,17 @@ const ShowImageScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
     container: {
         marginTop: height*0.005,
-        backgroundColor: "#FFF3EA",
+        backgroundColor: "#FBEFFB",
     },
     imageStyle:
     {
-        width: width * 0.99,
-        height: height * 0.5,
+        width: width * 0.90,
+        height: height * 0.7,
         resizeMode: "contain",
     },
     cardItemImage:
     {
-        backgroundColor: "#E5E4E2",
+        backgroundColor: "#FBEFFB",
         marginLeft:width*0.0099, 
         marginRight:width*0.0099, 
         marginTop:height*0.007,
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     },
     cardItem:
     {
-        backgroundColor: "#E5E4E2",
+        backgroundColor: "#FBEFFB",
         marginLeft:width*0.0099, 
         marginRight:width*0.0099, 
         marginTop:height*0.007,
@@ -106,7 +110,7 @@ const styles = StyleSheet.create({
     {
         width:width*0.96, 
         height:height*0.535, 
-        backgroundColor: "#251C69", 
+        backgroundColor: "#F6CEF5", 
         borderRadius:20, 
         marginLeft:width*0.02, 
         marginRight:width*0.02
@@ -115,7 +119,7 @@ const styles = StyleSheet.create({
     {
         width:width*0.96, 
         height:height*0.0999, 
-        backgroundColor: "#251C69", 
+        backgroundColor: "#F6CEF5", 
         borderRadius:20, 
         marginLeft:width*0.02, 
         marginRight:width*0.02,
@@ -124,8 +128,13 @@ const styles = StyleSheet.create({
     {
         justifyContent: "center",
         alignContent: "center",
-        backgroundColor: "#50858b",
+        backgroundColor: "#FBEFFB",
         flex: 1,
+    },
+    text:
+    {
+        color : "#3B0B2E",
+        fontSize: 18,
     },
 });
 

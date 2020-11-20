@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import {StyleSheet, View, Text, Dimensions, Image} from "react-native";
-import {Container, Content, H1, Spinner, Card, CardItem } from "native-base";
+import {Container, Content, H1, Spinner, Card, CardItem, Segment, Button } from "native-base";
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
 const { width, height} = Dimensions.get("window");
 
-const {apiUrl, apiKey} = getEnvVars();
+const {apiKey} = getEnvVars();
 
+//Pantalla de busqueda perteneciente al boton de GIF
+
+
+//Variable que contiene la pantalla
 const SearchResults = ({route, navigation}) => {
     const { search } = route.params;
     const [stickers, setStickers] = useState(null);
     const [error, setError] = useState(false);
 
+
+    //Funcion encargada de mandar a consultar a la API
     const getSearchStickers = async () => {
         try {
 
@@ -28,10 +34,12 @@ const SearchResults = ({route, navigation}) => {
         }
     }
 
+    //Manda a llamar a funcion que consulta a la API
     useEffect(() => {
         getSearchStickers();
      }, []);
 
+     //Se asegura que la variable no este vacia
     if (!stickers)
     {
         return(
@@ -44,7 +52,19 @@ const SearchResults = ({route, navigation}) => {
 
     return (
         <Container style={styles.container}>
-            <H1>Resultados</H1>
+            <H1 style={styles.h1}>Resultados: {search}</H1>
+            <Segment style={styles.segment}>
+                <Button rounded style={styles.button}>	        
+                    <Text style={styles.text}>
+                        Stickers
+                    </Text>	                    
+                </Button>	                
+                <Button rounded onPress={() => {navigation.navigate("searchResultsGif", {search})}} style={styles.button}>	                
+                    <Text style={styles.text}>	                    
+                        Gifs	
+                    </Text>	
+                </Button>	               
+            </Segment>
             <FlatList
             data={stickers.data}
             keyExtractor={(item) => item.id}
@@ -68,16 +88,14 @@ const SearchResults = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#FFF3EA",
+        backgroundColor: "#FBEFFB",
     },
     h1:
-    { 
-        
-        color: "#000",
-        position: "relative",
-        backgroundColor: "#FFF3EA",
+    {         
+        color: "#3B0B2E",
+        backgroundColor: "#FBEFFB",
         marginTop: height*0.02,
-        marginEnd: height*0.08,
+        marginEnd: height*0.08,  
     },
     imageStyle:
     {
@@ -86,7 +104,7 @@ const styles = StyleSheet.create({
     },
     cardItem:
     {
-        backgroundColor: "#E5E4E2",
+        backgroundColor: "#FBEFFB",
         marginLeft:width*0.0099, 
         marginRight:width*0.0099, 
         marginTop:height*0.007,
@@ -100,7 +118,7 @@ const styles = StyleSheet.create({
     {
         width:width*0.96, 
         height:height*0.35, 
-        backgroundColor: "#251C69", 
+        backgroundColor: "#F6CEF5", 
         borderRadius:20, 
         marginLeft:width*0.02, 
         marginRight:width*0.02
@@ -109,8 +127,27 @@ const styles = StyleSheet.create({
     {
         justifyContent: "center",
         alignContent: "center",
-        backgroundColor: "#FFF3EA",
+        backgroundColor: "#FBEFFB",
         flex: 1,
+    },
+    segment:
+    {
+        backgroundColor: "#FBEFFB",
+    },
+    button:
+    {
+        flex: 1,
+        width: width * 0.5,
+        fontFamily: "FontAwesome",
+        fontSize: 50,
+        borderBottomColor: "#F5A9F2",
+        marginLeft: 15,
+        marginHorizontal: 15,
+    },
+    text:
+    {
+        color : "#3B0B2E",
+        fontSize: 18,
     },
 });
 

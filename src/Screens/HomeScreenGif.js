@@ -34,25 +34,26 @@ const { width, height} = Dimensions.get("window");
 
 
 
-
+//Esta es la pantalla principal que aparece al momento de 
+//presionar el boton de GIF
 
 //Variable que contiene la pantalla
 const HomeScreenGif = ( {navigation} ) => {
     //Maneja el estado de los stickers.
-    const [stickers, setStickers] = useState(null);
+    const [gifs, setGifs] = useState(null);
     const [error, setError] = useState(false);
     const [search, setSearch] = useState("");
     const [searchError, setSearchError] = useState(false);
 
     
 
-    const getStickers = async () => {
+    const getGifs = async () => {
        try {
 
          //Se consulta la api
          const response = await backend.get(`gifs/search?api_key=${apiKey}&q=ryan&limit=25&offset=0&rating=g&lang=es`);
 
-         setStickers(response.data);
+         setGifs(response.data);
 
        } catch (error) {
 
@@ -61,6 +62,7 @@ const HomeScreenGif = ( {navigation} ) => {
        }
     }
 
+     //Verifica que no se haga una busqueda vacia
     const handlerSearch = () => {
         if (!search) setSearchError(true);
         else {
@@ -70,15 +72,18 @@ const HomeScreenGif = ( {navigation} ) => {
         }
       };
 
+     //Manda a llamar la funcion que contiene la peticion de la API, y verifica que no se este mandando a llamar a cada rato.
     useEffect(() => {
-        getStickers();
+        getGifs();
     }, [])
 
+    //Manda a llamar a la busqueda 
     useEffect(() => {
         if (search) setSearchError(false);
       }, [search]);   
 
-    if (!stickers)
+    //Hace una pausa para asegurarse que la variable Sticker contenga valores
+    if (!gifs)
     {
         return(
             <View style={styles.spinner}>
@@ -89,29 +94,29 @@ const HomeScreenGif = ( {navigation} ) => {
     
     return (
         <Container style={styles.container}> 
-            <Header searchBar noShadow style={styles.search} androidStatusBarColor="#004e64">
+            <Header searchBar noShadow style={styles.search} androidStatusBarColor="#610B5E">
                 <Item rounded>
                     <Input placeholder="Buscar" value={search} onChangeText={setSearch} style={searchError ? styles.inputError : null}/>
                     <Right>
                         <Button transparent onPress={handlerSearch}>
-                            <Icon name="search"/>
+                            <Icon style={styles.icon} name="search"/>
                         </Button>
                     </Right>
                 </Item>
             </Header> 
             <Segment style={styles.segment}>
-                <Button rounded  onPress={() => {navigation.navigate("homeScreen", {search})}} style={styles.button}>	        
-                    <Text>Stickers</Text>	                    
+                <Button rounded  onPress={() => {navigation.navigate("homeScreen")}} style={styles.button}>	        
+                    <Text style={styles.text}>Stickers</Text>	                    
                 </Button>	                
-                <Button rounded onPress={() => {navigation.navigate("searchResults", {search})}} style={styles.button}>	                
-                    <Text>	                    
+                <Button rounded style={styles.button}>	                
+                    <Text style={styles.text}>	                    
                         Gifs	
                     </Text>	
                 </Button>	               
             </Segment>          	            
             
             <FlatList
-            data={stickers.data}
+            data={gifs.data}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={<Text>No se encontraron Stickers</Text>}
             renderItem={({ item }) => {
@@ -135,11 +140,11 @@ const HomeScreenGif = ( {navigation} ) => {
 //Variable para la hoja de estilos
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#FFF3EA",
+        backgroundColor: "#FBEFFB",
     },
     header: 
     {
-        backgroundColor:"#FFF3EA",        
+        backgroundColor:"#FBEFFB",        
     },
     gifterImage: 
     {
@@ -148,13 +153,13 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     search: {
-        backgroundColor:"#FFF3EA",
+        backgroundColor:"#FBEFFB",
         //marginTop:-15,
         
     },
     segment:
     {
-        backgroundColor: "#FFF3EA",
+        backgroundColor: "#FBEFFB",
     },
     button:
     {
@@ -162,7 +167,7 @@ const styles = StyleSheet.create({
         width: width * 0.5,
         fontFamily: "FontAwesome",
         fontSize: 50,
-        borderBottomColor: "#251C69",
+        borderBottomColor: "#F5A9F2",
         marginLeft: 15,
         marginHorizontal: 15,
     },
@@ -173,7 +178,7 @@ const styles = StyleSheet.create({
     },
     cardItem:
     {
-        backgroundColor: "#E5E4E2",
+        backgroundColor: "#FBEFFB",
         marginLeft:width*0.0099, 
         marginRight:width*0.0099, 
         marginTop:height*0.007,
@@ -187,23 +192,33 @@ const styles = StyleSheet.create({
     {
         width:width*0.96, 
         height:height*0.35, 
-        backgroundColor: "#251C69", 
+        backgroundColor: "#F6CEF5", 
         borderRadius:20, 
         marginLeft:width*0.02, 
         marginRight:width*0.02
     },
     spinner:
     {
+        
         justifyContent: "center",
         alignContent: "center",
-        backgroundColor: "#E5E4E2",
+        backgroundColor: "#FBEFFB",
         flex: 1,
     },
     inputError: {
-        borderColor: "#251C69",
+        borderColor: "#B4045F",
         borderWidth: 1,
-        color: "#251C69",
+        color: "#B4045F",
       },
+    text:
+    {
+        color : "#3B0B2E",
+        fontSize: 18,
+    },
+    icon:
+    {
+        color : "#610B5E",
+    },
 });
 
 export default HomeScreenGif;
