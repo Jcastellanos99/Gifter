@@ -6,6 +6,7 @@ import HomeScreen from "./src/Screens/HomeScreen";
 import SearchResults from "./src/Screens/SearchResults";
 import ShowImageScreen from "./src/Screens/ShowImageScreen";
 import HomeScreenGif from "./src/Screens/HomeScreenGif"
+import SearchResultsGif from "./src/Screens/SearchResultsGif"
 import { Form } from 'native-base';
 
 const { width, height} = Dimensions.get("window");
@@ -47,13 +48,15 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="homeScreen">
         <Stack.Screen name="homeScreen" component={HomeScreen} 
-        options={{headerTitle: props=> <LogoTitle {...props}/>, headerStyle: {backgroundColor: "#251C69",}}} />
+        options={{headerTitle: props=> <LogoTitle {...props}/>, headerStyle: {backgroundColor: "#610B5E",}}} />
          <Stack.Screen name="homeScreenGif" component={HomeScreenGif} 
-        options={{headerTitle: props=> <LogoTitleGif {...props}/>, headerStyle: {backgroundColor: "#251C69",}}} />
+        options={{headerTitle: props=> <LogoTitleGif {...props}/>, headerStyle: {backgroundColor: "#610B5E",}}} />
         <Stack.Screen name="searchResults" component={SearchResults} 
-        options={{headerTitle: props=> <ImageTitle {...props}/>, headerStyle: {backgroundColor: "#251C69"}, headerTintColor: "#fff"}}/>
+        options={{headerTitle: props=> <ImageTitle {...props}/>, headerStyle: {backgroundColor: "#610B5E"}, headerTintColor: "#fff"}}/>
+        <Stack.Screen name="searchResultsGif" component={SearchResultsGif} 
+        options={{headerTitle: props=> <ImageTitle {...props}/>, headerStyle: {backgroundColor: "#610B5E"}, headerTintColor: "#fff"}}/>
         <Stack.Screen name="Image" component={ShowImageScreen} 
-        options={{headerTitle: props=> <ImageTitle {...props}/>, headerStyle: {backgroundColor: "#251C69"}, headerTintColor: "#fff"}}/>
+        options={{headerTitle: props=> <ImageTitle {...props}/>, headerStyle: {backgroundColor: "#610B5E"}, headerTintColor: "#fff"}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
         marginLeft: width*-0.045,
         resizeMode: "contain",
         flex : 1,
-        backgroundColor: "#251C69",
+        backgroundColor: "#610B5E",
     },
     LogoImageGif: 
     {
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
         marginLeft: width*-0.18,
         resizeMode: "contain",
         flex : 1,
-        backgroundColor: "#251C69",
+        backgroundColor: "#610B5E",
     },
     gifterImage: 
     {
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
         
         resizeMode: "contain",
         flex : 1,
-        backgroundColor: "#251C69",
+        backgroundColor: "#610B5E",
     },
 })
 
