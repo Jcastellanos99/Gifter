@@ -7,7 +7,7 @@
 para actualizar todos los paquetes necesarios para poder ejecutarla.<p>
 
 <p><strong>DOCUMENTACION UTILIZADA<strong><p>
-<p>GIPHY: https://developers.giphy.com/docs/api#response-codes <p>
+<p>GIPHY: https://developers.giphy.com/docs/api#quick-start-guide <p>
 <p>NATIVE BASE: https://docs.nativebase.io/Components.html#Components<p>
 <p>REACT NATIVE: https://reactnative.dev/docs/getting-started<p>
 <p> AXIOS: https://www.npmjs.com/package/axios <p>
