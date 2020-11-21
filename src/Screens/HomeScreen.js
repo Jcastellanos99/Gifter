@@ -93,6 +93,11 @@ const HomeScreen = ( {navigation} ) => {
         )
     }
     
+    //Informacion del diseño extraida de la documentacion oficial de native base
+    //https://docs.nativebase.io/Components.html#Components
+    //Informacion de la API extraida del sitio oficial de GIPHY
+    //https://developers.giphy.com/docs/api#response-codes
+    //Todo lo demas es codigo aprendido en clase.
     return (
         <Container style={styles.container}> 
             <Header searchBar noShadow style={styles.search} androidStatusBarColor="#610B5E">
@@ -105,7 +110,7 @@ const HomeScreen = ( {navigation} ) => {
                     </Right>
                 </Item>
             </Header> 
-            <Segment style={styles.segment}>
+            <Segment style={styles.segment}> 
                 <Button rounded  style={styles.button}>	        
                     <Text style={styles.text}>
                         Stickers
